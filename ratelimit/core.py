@@ -3,7 +3,6 @@ import functools
 import hashlib
 import re
 import time
-import zlib
 
 from django.conf import settings
 from django.core.cache import caches
@@ -94,7 +93,7 @@ def _get_window(value, period):
         return ts
     if not isinstance(value, bytes):
         value = value.encode('utf-8')
-    w = ts - (ts % period) + (zlib.crc32(value) % period)
+    w = ts - (ts % period)
     if w < ts:
         return w + period
     return w
